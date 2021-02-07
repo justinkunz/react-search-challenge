@@ -2,6 +2,8 @@ import { ACTIONS } from '../constants';
 
 const initialProfilesState = {
   profiles: [],
+  isFetching: false,
+  hasFetchedData: false,
 };
 
 export default (state = initialProfilesState, action) => {
@@ -10,7 +12,9 @@ export default (state = initialProfilesState, action) => {
     case ACTIONS.PROFILES.SET_IS_FETCHING:
       return { ...state, isFetching: !!action.payload };
     case ACTIONS.PROFILES.SET_PROFILES:
-      return { profiles: action.payload };
+      return { ...state, profiles: action.payload };
+    case ACTIONS.PROFILES.SET_HAS_FETCHED_DATA:
+      return { ...state, hasFetchedData: !!action.payload };
     case ACTIONS.PROFILES.SORT_ASCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) => (profileA.handle > profileB.handle ? 1 : -1));

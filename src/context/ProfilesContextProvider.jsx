@@ -3,7 +3,8 @@ import ProfilesReducer from '../reducers/profiles';
 
 export const ProfileContext = React.createContext({
   profiles: [],
-  isFetching: true,
+  isFetching: false,
+  hasFetchedData: false,
 });
 
 function ProfilesContextProvider({ children }) {

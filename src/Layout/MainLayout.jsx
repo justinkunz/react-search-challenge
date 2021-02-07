@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Header } from '../../Components';
+import { Header } from '../Components';
 import styled from 'styled-components';
 
 export default function MainLayout({ children }) {

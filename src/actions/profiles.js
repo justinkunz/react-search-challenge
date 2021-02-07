@@ -10,6 +10,11 @@ export const setProfiles = (payload) => ({
   type: ACTIONS.PROFILES.SET_PROFILES,
 });
 
+export const setHasFetchedData = (payload) => ({
+  payload,
+  type: ACTIONS.PROFILES.SET_HAS_FETCHED_DATA,
+});
+
 export const ascendingSort = (payload) => ({
   payload,
   type: ACTIONS.PROFILES.SORT_ASCENDING,

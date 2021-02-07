@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ProfileContext } from '../context/ProfilesContextProvider';
 import { useFetchProfiles } from '../hooks';
 import { useParams } from 'react-router-dom';
-import { MainLayout } from './PageLayouts';
-import { Flexbox, Card, MinimalButton } from '../Components/shared';
-import { Loader } from '../Components';
-import * as API from '../api';
+import { Flexbox, Card, MinimalButton, VerticalTable } from '../Components/shared';
+import { ProfileNotFound } from '../Components/EmptyStates';
+import { Loader, DocumentTitle } from '../Components';
 import images from '../assets';
 import styled from 'styled-components';
 
@@ -28,17 +27,6 @@ const FullName = styled.div`
 
 const ProfileImage = styled.img`
   height: 100%;
-`;
-
-const TableHeader = styled.th`
-  font-weight: 400;
-  color: #6f6d6d;
-  text-align: left;
-`;
-
-const Table = styled.table`
-  font-family: 'Open Sans', sans-serif;
-  ${({ small }) => `font-size: ${small ? '14px' : '16px'};`}
 `;
 
 const UserContactContainer = styled.div`
@@ -70,14 +58,13 @@ const BackToResults = styled.div`
 
 export default function UserProfile() {
   const { username = null } = useParams();
-  const { profiles = [], isFetching } = useContext(ProfileContext);
-  const history = useHistory();
+  const { profiles = [], isFetching = false, hasFetchedData = false } = useContext(ProfileContext);
 
   const [user, setUser] = useState(null);
   const fetchProfiles = useFetchProfiles();
 
   useEffect(() => {
-    if (!profiles || profiles.length === 0) {
+    if (profiles?.length === 0 && !hasFetchedData && !isFetching) {
       fetchProfiles();
     }
 
@@ -85,9 +72,7 @@ export default function UserProfile() {
     setUser(currentUser);
   }, [profiles, setUser]);
 
-  const redirectToHome = () => history.push('/');
-
-  const tableData = [
+  const profileData = [
     user?.dob?.age && {
       label: 'Age',
       value: user.dob.age,
@@ -101,70 +86,60 @@ export default function UserProfile() {
         label: 'Location',
         value: `${user.location.city}, ${user.location.state}`,
       },
-  ].filter((data) => !!data);
+  ];
+
+  const contactData = [
+    user?.cell && {
+      label: <ContactIcon src={images.phone} alt="phone" />,
+      value: user.cell,
+    },
+    user?.email && {
+      label: <ContactIcon src={images.mail} alt="email" />,
+      value: user.email,
+    },
+  ];
+
+  if (isFetching) {
+    return <Loader />;
+  }
+
+  if (!isFetching && !hasFetchedData) {
+    return null;
+  }
 
   return (
-    <MainLayout>
-      {isFetching ? (
-        <Loader />
+    <ProfileContainer>
+      <ProfileHeader>
+        <Flexbox justify="flex-start">
+          <Link to="/">
+            <MinimalButton>
+              <BackToResults>&#60; Back to Home</BackToResults>
+            </MinimalButton>
+          </Link>
+        </Flexbox>
+      </ProfileHeader>
+      {!user ? (
+        <ProfileNotFound />
       ) : (
-        <ProfileContainer>
-          {!user ? (
-            <div>Profile Empty State</div>
-          ) : (
-            <div>
-              <ProfileHeader>
-                <Flexbox justify="flex-start">
-                  <MinimalButton onClick={redirectToHome}>
-                    <BackToResults>&#60; Back to Results</BackToResults>
-                  </MinimalButton>
-                </Flexbox>
-              </ProfileHeader>
-              <Flexbox justify="flex-start">
-                <Card>
-                  <ProfileImage src={user?.picture?.large} alt="potential date" />
-                </Card>
-                <UserInfoContainer>
-                  <FullName>
-                    {user?.name?.first} {user?.name?.last}
-                  </FullName>
-                  <Table>
-                    <tbody>
-                      {tableData.map((data) => (
-                        <tr>
-                          <TableHeader>{data.label}:</TableHeader>
-                          <td>{data.value}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </UserInfoContainer>
-                <UserContactContainer>
-                  <Card pad>
-                    <ContactTitle>Contact</ContactTitle>
-                    <Table small>
-                      <tbody>
-                        <tr>
-                          <TableHeader>
-                            <ContactIcon src={images.phone} alt="phone" />
-                          </TableHeader>
-                          <td>{user?.cell}</td>
-                        </tr>
-                        <tr>
-                          <TableHeader>
-                            <ContactIcon src={images.mail} alt="email" />
-                          </TableHeader>
-                          <td>{user?.email}</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </Card>
-                </UserContactContainer>
-              </Flexbox>
-            </div>
-          )}
-        </ProfileContainer>
+        <Flexbox justify="flex-start">
+          <DocumentTitle title={`Match | ${user?.name?.first}'s Profile`} />
+          <Card>
+            <ProfileImage src={user?.picture?.large} alt="potential date" />
+          </Card>
+          <UserInfoContainer>
+            <FullName>
+              {user?.name?.first} {user?.name?.last}
+            </FullName>
+            <VerticalTable dataSet={profileData} includeSemiColon />
+          </UserInfoContainer>
+          <UserContactContainer>
+            <Card pad>
+              <ContactTitle>Contact</ContactTitle>
+              <VerticalTable dataSet={contactData} small />
+            </Card>
+          </UserContactContainer>
+        </Flexbox>
       )}
-    </MainLayout>
+    </ProfileContainer>
   );
 }

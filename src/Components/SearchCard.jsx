@@ -7,6 +7,9 @@ const Avatar = styled.div`
   position: relative;
   width: 200px;
   height: 200px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const CardContent = styled.div`
@@ -50,8 +53,8 @@ export default function SearchCard({
   const handleCardClick = () => history.push(`/profile/${username}`);
   return (
     <Flexbox align="center" justify="center">
-      <Card onClick={handleCardClick}>
-        <Avatar>
+      <Card>
+        <Avatar onClick={handleCardClick}>
           <UserImage src={photoUrl} alt="potential date" />
           <CardContent>
             <Flexbox align="flex-end" justify="space-between">
