@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import { ProfileContext } from '../context/ProfilesContextProvider';
+import { setProfiles } from '../actions';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-import { Flexbox } from './shared';
+import { Flexbox, IconButton } from './shared';
+import * as API from '../api';
+import images from '../assets';
 
 const CountdownLabel = styled.div`
-  color: lightgray;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   color: #1927f0;
+  font-weight: 600;
 `;
 const CountdownContainer = styled.div`
-  height: 24px;
   position: absolute;
   left: 8px;
   font-size: 12px;
@@ -18,19 +22,24 @@ const TimerContainer = styled.div`
   margin: 0 8px;
 `;
 
-export default function Countdown({ label = null }) {
+export default function Countdown({ label = null, duration = 10 }) {
+  const { dispatch } = useContext(ProfileContext);
+
   const [isTimerActive, setIsTimerActive] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const handleTimerComplete2 = async () => {
-    setIsTimerActive(false);
-    await sleep(3000);
-    console.log('done');
+  const handlePauseClick = () => setIsTimerActive(false);
+  const handlePlayClick = () => setIsTimerActive(true);
 
-    setIsTimerActive(true);
-  };
   const handleTimerComplete = () => {
-    handleTimerComplete2();
+    const fetchProfiles = async () => {
+      setIsFetching(true);
+      const profiles = await API.getUserProfiles();
+      setIsFetching(false);
+      dispatch(setProfiles(profiles.response.results));
+    };
+
+    fetchProfiles();
     // Restart Timer
     return [true];
   };
@@ -40,8 +49,8 @@ export default function Countdown({ label = null }) {
         {label && <CountdownLabel>{label}</CountdownLabel>}
         <TimerContainer>
           <CountdownCircleTimer
-            isPlaying={isTimerActive}
-            duration={10}
+            isPlaying={isTimerActive && !isFetching}
+            duration={duration}
             colors={[['#1927f0', 1]]}
             size={27}
             strokeWidth={3}
@@ -50,6 +59,22 @@ export default function Countdown({ label = null }) {
             {({ remainingTime }) => (isTimerActive ? remainingTime : '...')}
           </CountdownCircleTimer>
         </TimerContainer>
+
+        <IconButton
+          onClick={handlePlayClick}
+          src={images.play}
+          alt="play"
+          m={0}
+          disabled={isTimerActive || isFetching}
+        />
+        <IconButton
+          onClick={handlePauseClick}
+          src={images.pause}
+          alt="pause"
+          m={0}
+          disabled={!isTimerActive || isFetching}
+        />
+        {/* </div> */}
       </Flexbox>
     </CountdownContainer>
   );

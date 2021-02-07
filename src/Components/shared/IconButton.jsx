@@ -2,24 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import MinimalButton from './MinimalButton';
 
+const Img = styled.img`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
+  ${({ disabled }) => disabled && 'opacity: 0.5'};
+`;
+
 export default function IconButton({
   onClick: onClickProp = () => {},
   src = '',
   alt = 'icon',
   size = 22,
+  disabled = false,
 }) {
-  const Img = styled.img`
-    width: ${size}px;
-    height: ${size}px;
-  `;
   const handleIconClick = (e) => {
     if (typeof onClickProp === 'function') {
       onClickProp(e);
     }
   };
   return (
-    <MinimalButton onClick={handleIconClick}>
-      <Img src={src} alt={alt} />
+    <MinimalButton onClick={handleIconClick} disabled={disabled}>
+      <Img src={src} alt={alt} size={size} disabled={disabled} />
     </MinimalButton>
   );
 }
