@@ -5,6 +5,7 @@ const Card = styled.div`
   border-radius: 8px;
   box-shadow: 0 3px 6px lightgray, 0 3px 6px;
   overflow: hidden;
+  ${({ pad }) => pad && 'padding: 6px 12px'}
 `;
 
 export default Card;

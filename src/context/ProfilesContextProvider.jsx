@@ -1,9 +1,9 @@
 import React from 'react';
 import ProfilesReducer from '../reducers/profiles';
-import mockProfiles from '../profiles.json';
 
 export const ProfileContext = React.createContext({
   profiles: [],
+  isFetching: true,
 });
 
 function ProfilesContextProvider({ children }) {

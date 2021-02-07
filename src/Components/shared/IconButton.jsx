@@ -4,7 +4,6 @@ import MinimalButton from './MinimalButton';
 
 const Img = styled.img`
   width: ${({ size }) => `${size}px`};
-  height: ${({ size }) => `${size}px`};
   ${({ disabled }) => disabled && 'opacity: 0.5'};
 `;
 

@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ProfileContext } from '../context/ProfilesContextProvider';
+import { useFetchProfiles } from '../hooks';
 import images from '../assets';
 import { setProfiles, ascendingSort, descendingSort } from '../actions';
 import { MainLayout } from './PageLayouts';
@@ -8,26 +9,18 @@ import { Flexbox, IconButton, Grid } from '../Components/shared';
 import * as API from '../api';
 
 export default function SearchPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const { profiles = [], dispatch } = useContext(ProfileContext);
+  const { profiles = [], isFetching = false, dispatch } = useContext(ProfileContext);
 
+  const fetchProfiles = useFetchProfiles();
   const handleSortAscending = () => dispatch(ascendingSort());
   const handleSortDescending = () => dispatch(descendingSort());
 
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      setIsLoading(true);
-      const profiles = await API.getUserProfiles();
-      setIsLoading(false);
-      dispatch(setProfiles(profiles.response.results));
-    };
+  useEffect(fetchProfiles, []);
 
-    fetchProfiles();
-  }, [dispatch]);
-
+  const showFullPageLoader = isFetching && profiles.length === 0;
   return (
     <MainLayout>
-      {isLoading ? (
+      {showFullPageLoader ? (
         <Loader />
       ) : (
         <>
@@ -51,11 +44,12 @@ export default function SearchPage() {
           <Grid columnCount={4}>
             {profiles.map((profile) => (
               <SearchCard
-                key={profile?.id?.value}
+                key={profile?.login?.username}
                 photoUrl={profile?.picture?.large}
                 name={profile?.name?.first}
-                location={profile?.location?.country}
+                location={profile?.location?.city}
                 age={profile?.dob?.age}
+                username={profile?.login?.username}
               />
             ))}
           </Grid>

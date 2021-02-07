@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Flexbox, Card } from './shared';
 
@@ -43,11 +44,13 @@ export default function SearchCard({
   name = '',
   location = '',
   age = 99,
-  photoCount = 0,
+  username = '',
 }) {
+  const history = useHistory();
+  const handleCardClick = () => history.push(`/profile/${username}`);
   return (
     <Flexbox align="center" justify="center">
-      <Card>
+      <Card onClick={handleCardClick}>
         <Avatar>
           <UserImage src={photoUrl} alt="potential date" />
           <CardContent>

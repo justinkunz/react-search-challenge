@@ -1,4 +1,4 @@
-import * as ENDPOINTS from './endpoints';
+import * as API from './api';
 import * as ACTIONS from './actions';
 
-export { ENDPOINTS, ACTIONS };
+export { API, ACTIONS };

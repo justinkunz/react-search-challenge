@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { ProfileContext } from '../context/ProfilesContextProvider';
+import { useFetchProfiles } from '../hooks';
 import { setProfiles } from '../actions';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { Flexbox, IconButton } from './shared';
@@ -23,23 +24,17 @@ const TimerContainer = styled.div`
 `;
 
 export default function Countdown({ label = null, duration = 10 }) {
-  const { dispatch } = useContext(ProfileContext);
-
+  const { isFetching } = useContext(ProfileContext);
+  const fetchProfiles = useFetchProfiles();
   const [isTimerActive, setIsTimerActive] = useState(true);
-  const [isFetching, setIsFetching] = useState(false);
 
   const handlePauseClick = () => setIsTimerActive(false);
   const handlePlayClick = () => setIsTimerActive(true);
 
   const handleTimerComplete = () => {
-    const fetchProfiles = async () => {
-      setIsFetching(true);
-      const profiles = await API.getUserProfiles();
-      setIsFetching(false);
-      dispatch(setProfiles(profiles.response.results));
-    };
-
+    // Refetch Profiles
     fetchProfiles();
+
     // Restart Timer
     return [true];
   };
@@ -56,7 +51,7 @@ export default function Countdown({ label = null, duration = 10 }) {
             strokeWidth={3}
             onComplete={handleTimerComplete}
           >
-            {({ remainingTime }) => (isTimerActive ? remainingTime : '...')}
+            {({ remainingTime }) => (isTimerActive && !isFetching ? remainingTime : '...')}
           </CountdownCircleTimer>
         </TimerContainer>
 
@@ -74,7 +69,6 @@ export default function Countdown({ label = null, duration = 10 }) {
           m={0}
           disabled={!isTimerActive || isFetching}
         />
-        {/* </div> */}
       </Flexbox>
     </CountdownContainer>
   );

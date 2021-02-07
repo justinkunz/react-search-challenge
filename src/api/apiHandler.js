@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const apiHandler = async (method, url, params = {}, headers = {}, data = {}) => {
   try {
     const { data: response, status } = await axios({ method, url, params, headers, data });
     console.log(status);
+    await sleep(2000);
     return { successful: true, response };
   } catch (err) {
     console.error(err);
