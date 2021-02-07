@@ -37,7 +37,7 @@ export default function SearchPage() {
   return (
     <Fragment>
       <Flexbox justify="flex-end" align="center">
-        <Countdown time={10} label="refresh profiles" actionText="Refreshing Profiles" />
+        <Countdown time={10} label="refresh profiles" />
         <IconButton
           src={isFiltered ? images.filterOn : images.filterOff}
           alt="filter"
