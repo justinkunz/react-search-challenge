@@ -1,5 +1,5 @@
 import React from 'react';
-import MinimalButton from './MinimalButton';
+import MinimalButton from '../MinimalButton';
 import Image from './Image';
 
 export default function IconButton({
