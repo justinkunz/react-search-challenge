@@ -18,10 +18,9 @@ export default (state = initialProfilesState, action) => {
     case ACTIONS.PROFILES.SORT_ASCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) =>
-        profileA?.name?.first > profileB?.user?.first ? 1 : -1
+        profileA?.name?.first > profileB?.name?.first ? 1 : -1
       );
       return { ...state, profiles };
-
     case ACTIONS.PROFILES.SORT_DESCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) =>

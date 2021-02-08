@@ -1,16 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const TableHeader = styled.th`
-  font-weight: 400;
-  color: #6f6d6d;
-  text-align: left;
-`;
-
-const Table = styled.table`
-  font-family: 'Open Sans', sans-serif;
-  ${({ small }) => `font-size: ${small ? '14px' : '16px'};`}
-`;
+import Table from './Table';
+import TableHeader from './TableHeader';
 
 export default function VerticalTable({ dataSet = [], small = false, includeSemiColon = false }) {
   return (

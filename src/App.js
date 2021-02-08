@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SearchPage, UserProfile } from './Views';
+import { Search, Profile, Layout } from './Components';
 import { PageNotFound } from './Components/EmptyStates';
-import { DocumentTitle } from './Components';
+import { DocumentTitle } from './Components/Shared';
 import { ToastContainer } from 'react-toastify';
-import { MainLayout } from './Layout';
 import ProfilesContextProvider from './context/ProfilesContextProvider';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.css';
@@ -14,22 +13,22 @@ function App() {
     <ProfilesContextProvider>
       <Router>
         <ToastContainer autoClose={3000} closeOnClick hideProgressBar />
-        <MainLayout>
+        <Layout>
           <Switch>
             <Route path="/" exact>
               <DocumentTitle title="Match | Profile Search" />
-              <SearchPage />
+              <Search />
             </Route>
             <Route path="/profile/:username" exact>
               <DocumentTitle title="Match | User Profile" />
-              <UserProfile />
+              <Profile />
             </Route>
             <Route path="*">
               <DocumentTitle title="Match | Page Not Found" />
               <PageNotFound />
             </Route>
           </Switch>
-        </MainLayout>
+        </Layout>
       </Router>
     </ProfilesContextProvider>
   );

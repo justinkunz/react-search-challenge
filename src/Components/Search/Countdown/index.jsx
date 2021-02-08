@@ -1,27 +1,12 @@
 import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
-import { ProfileContext } from '../context/ProfilesContextProvider';
-import { useFetchProfiles } from '../hooks';
-import { setProfiles } from '../actions';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-import { Flexbox, IconButton } from './shared';
-import * as API from '../api';
-import images from '../assets';
-
-const CountdownLabel = styled.div`
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  color: #1927f0;
-  font-weight: 600;
-`;
-const CountdownContainer = styled.div`
-  position: absolute;
-  left: 8px;
-  font-size: 12px;
-`;
-const TimerContainer = styled.div`
-  margin: 0 8px;
-`;
+import { Flexbox, IconButton } from '../../Shared';
+import { ProfileContext } from '../../../context/ProfilesContextProvider';
+import { useFetchProfiles } from '../../../hooks';
+import images from '../../../assets';
+import CountdownContainer from './CountdownContainer';
+import CountdownLabel from './CountdownLabel';
+import TimerContainer from './TimerContainer';
 
 export default function Countdown({ label = null, duration = 10 }) {
   const { isFetching } = useContext(ProfileContext);

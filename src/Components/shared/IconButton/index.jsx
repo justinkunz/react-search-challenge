@@ -1,11 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import MinimalButton from './MinimalButton';
-
-const Img = styled.img`
-  width: ${({ size }) => `${size}px`};
-  ${({ disabled }) => disabled && 'opacity: 0.5'};
-`;
+import Image from './Image';
 
 export default function IconButton({
   onClick: onClickProp = () => {},
@@ -21,7 +16,7 @@ export default function IconButton({
   };
   return (
     <MinimalButton onClick={handleIconClick} disabled={disabled}>
-      <Img src={src} alt={alt} size={size} disabled={disabled} />
+      <Image src={src} alt={alt} size={size} disabled={disabled} />
     </MinimalButton>
   );
 }
