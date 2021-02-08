@@ -16,7 +16,7 @@ function App() {
         <Layout>
           <Switch>
             <Route path="/" exact>
-              <DocumentTitle title="Match | Profile Search" />
+              <DocumentTitle title="Match | Meet Someone New" />
               <Search />
             </Route>
             <Route path="/profile/:username" exact>

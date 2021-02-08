@@ -13,16 +13,27 @@ export default function Countdown({ label = null, duration = 10 }) {
   const fetchProfiles = useFetchProfiles();
   const [isTimerActive, setIsTimerActive] = useState(true);
 
+  /**
+   * Pause Timer when pause button clicked
+   */
   const handlePauseClick = () => setIsTimerActive(false);
+
+  /**
+   * Play Timer when play button clicked
+   */
   const handlePlayClick = () => setIsTimerActive(true);
 
+  /**
+   * When timer completes,
+   * refetch profiles
+   *
+   * @returns {Array} Array with truthy first item required to be returned from cb to keep circle timer active
+   */
   const handleTimerComplete = () => {
-    // Refetch Profiles
     fetchProfiles();
-
-    // Restart Timer
     return [true];
   };
+
   return (
     <CountdownContainer>
       <Flexbox justify="flex-start" align="center">
@@ -44,14 +55,14 @@ export default function Countdown({ label = null, duration = 10 }) {
           onClick={handlePlayClick}
           src={images.play}
           alt="play"
-          m={0}
+          margin={0}
           disabled={isTimerActive || isFetching}
         />
         <IconButton
           onClick={handlePauseClick}
           src={images.pause}
           alt="pause"
-          m={0}
+          margin={0}
           disabled={!isTimerActive || isFetching}
         />
       </Flexbox>

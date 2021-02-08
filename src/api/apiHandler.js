@@ -1,11 +1,22 @@
 import axios from 'axios';
 
+/**
+ * Handler for making API calls
+ *
+ * @param {String} method Request Method
+ * @param {String} url API URL
+ * @param {Object} params Request params
+ * @param {Object} headers Request headers
+ * @param {Object} data Request body
+ *
+ * @returns {Any} Response data
+ */
 const apiHandler = async (method, url, params = {}, headers = {}, data = {}) => {
   const { data: response } = await axios({ method, url, params, headers, data });
   return response;
 };
 
-export default {
+const api = {
   get: (url, params = {}, headers = {}) => apiHandler('GET', url, params, headers, {}),
   post: (url, params = {}, headers = {}, data = {}) =>
     apiHandler('POST', url, params, headers, data),
@@ -13,3 +24,5 @@ export default {
   delete: (url, params = {}, headers = {}, data = {}) =>
     apiHandler('DELETE', url, params, headers, data),
 };
+
+export default api;

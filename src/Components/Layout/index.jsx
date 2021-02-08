@@ -7,6 +7,10 @@ import { IconButton } from '../Shared';
 
 export default function Layout({ children }) {
   const history = useHistory();
+
+  /**
+   * Redirect to Home Page on Match logo push
+   */
   const redirectToHome = () => history.push('/');
 
   return (

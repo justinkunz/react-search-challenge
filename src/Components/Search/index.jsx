@@ -23,17 +23,25 @@ export default function SearchPage() {
   const [isFiltered, setIsFiltered] = useState(false);
 
   useEffect(() => {
-    if (profiles.length === 0 && !isFetching && !hasFetchedData) {
+    if (!isFetching && !hasFetchedData) {
       fetchProfiles();
     }
   }, [fetchProfiles, isFetching]);
 
+  /**
+   * On Filter Button Click,
+   * Filter to only female users
+   */
   const handleFilterClick = () => setIsFiltered(!isFiltered);
 
+  // Show loader if data is not fetched
+  // Or if on initial load (no profiles previously loaded)
   if (!hasFetchedData || (isFetching && profiles?.length === 0)) {
     return <Loader />;
   }
 
+  // If search results loaded but no profiles found
+  // Show Empty Search Results message
   if (!isFetching && hasFetchedData && profiles?.length === 0) {
     return <EmptySearchResults />;
   }

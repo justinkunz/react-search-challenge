@@ -12,7 +12,7 @@ import mail from './mail.svg';
 import notFoundError from './notFoundError.svg';
 import emptyResults from './emptyResults.svg';
 
-export default {
+const images = {
   logo,
   ascending,
   descending,
@@ -27,3 +27,5 @@ export default {
   notFoundError,
   emptyResults,
 };
+
+export default images;

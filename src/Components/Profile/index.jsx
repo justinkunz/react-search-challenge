@@ -20,20 +20,17 @@ export default function UserProfile() {
   const fetchProfiles = useFetchProfiles();
 
   useEffect(() => {
-    if (profiles?.length === 0 && !hasFetchedData && !isFetching) {
+    // If profiles have not been fetched, fetch profiles
+    if (!hasFetchedData && !isFetching) {
       fetchProfiles();
     }
 
     const currentUser = profiles.find((profile) => profile.login.username === username);
     setUser(currentUser);
-  }, [profiles, setUser]);
+  }, [profiles, setUser, fetchProfiles, hasFetchedData, isFetching, username]);
 
-  if (isFetching) {
+  if (isFetching || !hasFetchedData) {
     return <Loader />;
-  }
-
-  if (!isFetching && !hasFetchedData) {
-    return null;
   }
 
   return (

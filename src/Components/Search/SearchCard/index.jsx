@@ -16,11 +16,17 @@ export default function SearchCard({
   username = '',
 }) {
   const history = useHistory();
-  const handleCardClick = () => history.push(`/profile/${username}`);
+
+  /**
+   * On Profile select,
+   * Redirect to selected profile
+   */
+  const redirectToProfile = () => history.push(`/profile/${username}`);
+
   return (
     <Flexbox align="center" justify="center">
       <Card>
-        <Avatar onClick={handleCardClick}>
+        <Avatar onClick={redirectToProfile}>
           <UserImage src={photoUrl} alt="potential date" />
           <CardContent>
             <Flexbox align="flex-end" justify="space-between">

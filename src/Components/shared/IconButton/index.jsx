@@ -9,6 +9,12 @@ export default function IconButton({
   size = 22,
   disabled = false,
 }) {
+  /**
+   * Check if onClick function provided as prop,
+   * Call if valid prop provided
+   *
+   * @param {Object} e Click Event object
+   */
   const handleIconClick = (e) => {
     if (typeof onClickProp === 'function') {
       onClickProp(e);

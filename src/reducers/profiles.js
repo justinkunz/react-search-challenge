@@ -6,15 +6,15 @@ const initialProfilesState = {
   hasFetchedData: false,
 };
 
-export default (state = initialProfilesState, action) => {
+export default function profilesReducer(state = initialProfilesState, action) {
   let profiles;
   switch (action.type) {
     case ACTIONS.PROFILES.SET_IS_FETCHING:
-      return { ...state, isFetching: !!action.payload };
+      // On initial data fetch, toggle hasFetchedData state to true.
+      const hasFetchedData = !action.payload && !state.hasFetchedData ? true : state.hasFetchedData;
+      return { ...state, isFetching: !!action.payload, hasFetchedData };
     case ACTIONS.PROFILES.SET_PROFILES:
       return { ...state, profiles: action.payload };
-    case ACTIONS.PROFILES.SET_HAS_FETCHED_DATA:
-      return { ...state, hasFetchedData: !!action.payload };
     case ACTIONS.PROFILES.SORT_ASCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) =>
@@ -31,4 +31,4 @@ export default (state = initialProfilesState, action) => {
     default:
       throw new Error();
   }
-};
+}
