@@ -30,7 +30,7 @@ export default function SearchPage() {
 
   /**
    * On Filter Button Click,
-   * Filter to only female users
+   * Filter to only users under 50
    */
   const handleFilterClick = () => setIsFiltered(!isFiltered);
 
@@ -77,7 +77,7 @@ export default function SearchPage() {
 
         <ProfileGrid>
           {profiles
-            .filter((profile) => !isFiltered || profile.gender === 'female')
+            .filter((profile) => !isFiltered || profile.dob?.age < 50)
             .map((profile) => (
               <SearchCard
                 key={profile?.login?.username}
