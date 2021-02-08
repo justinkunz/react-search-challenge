@@ -26,7 +26,7 @@ export default function SearchPage() {
     if (!isFetching && !hasFetchedData) {
       fetchProfiles();
     }
-  }, [fetchProfiles, isFetching]);
+  }, [fetchProfiles, isFetching, hasFetchedData]);
 
   /**
    * On Filter Button Click,
