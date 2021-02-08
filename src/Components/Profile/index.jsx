@@ -22,6 +22,12 @@ export default function UserProfile() {
 
   useEffect(() => {
     // If profiles have not been fetched, fetch profiles
+    // Since mock user API does not have a route for grabbing info of a single, specific user
+    // Must fetch profiles, then find the specified user based of the profiles state
+    // This also allows for an easy transition when navigating back to the home page
+
+    // Note: Fetch only happens when the app has not yet fetched data
+    //    (ie: If a user initially opened or refreshed app on "/profiles/foo" route)
     if (!hasFetchedData && !isFetching) {
       fetchProfiles();
     }
