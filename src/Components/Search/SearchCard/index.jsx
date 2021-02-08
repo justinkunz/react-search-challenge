@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flexbox, Card } from '../../Shared';
+import images from '../../../assets';
 import Avatar from './Avatar';
 import CardContent from './CardContext';
 import UserImage from './UserImage';
@@ -27,7 +28,7 @@ export default function SearchCard({
     <Flexbox align="center" justify="center">
       <Card>
         <Avatar onClick={redirectToProfile}>
-          <UserImage src={photoUrl} alt="potential date" />
+          <UserImage src={photoUrl || images.defaultUser} alt="potential date" />
           <CardContent>
             <Flexbox align="flex-end" justify="space-between">
               <CardTextContainer>

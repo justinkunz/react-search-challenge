@@ -51,7 +51,7 @@ export default function SearchPage() {
       <SearchContainer>
         <Flexbox justify="flex-end" align="center">
           <SearchControls>
-            <Countdown time={10} label="Refresh Profiles" />
+            <Countdown duration={10} label="Refresh Profiles" />
             <Flexbox justify="flex-end">
               <IconButton
                 src={isFiltered ? images.filterOn : images.filterOff}

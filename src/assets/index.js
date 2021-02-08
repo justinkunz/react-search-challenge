@@ -11,6 +11,7 @@ import phone from './phone.svg';
 import mail from './mail.svg';
 import notFoundError from './notFoundError.svg';
 import emptyResults from './emptyResults.svg';
+import defaultUser from './defaultUser.png';
 
 const images = {
   logo,
@@ -26,6 +27,7 @@ const images = {
   mail,
   notFoundError,
   emptyResults,
+  defaultUser,
 };
 
 export default images;

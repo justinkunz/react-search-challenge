@@ -5,6 +5,7 @@ import { useFetchProfiles } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { Flexbox, Card, MinimalButton, Loader, DocumentTitle } from '../Shared';
 import { ProfileNotFound } from '../EmptyStates';
+import images from '../../assets';
 import UserInfoTable from './UserInfoTable';
 import ContactCard from './ContactCard';
 import ProfileContainer from './ProfileContainer';
@@ -25,7 +26,7 @@ export default function UserProfile() {
       fetchProfiles();
     }
 
-    const currentUser = profiles.find((profile) => profile.login.username === username);
+    const currentUser = profiles.find((profile) => profile.login?.username === username);
     setUser(currentUser);
   }, [profiles, setUser, fetchProfiles, hasFetchedData, isFetching, username]);
 
@@ -50,7 +51,7 @@ export default function UserProfile() {
         <Flexbox justify="flex-start">
           <DocumentTitle title={`Match | ${user?.name?.first}'s Profile`} />
           <Card>
-            <ProfileImage src={user?.picture?.large} alt="potential date" />
+            <ProfileImage src={user?.picture?.large || images.defaultUser} alt="potential date" />
           </Card>
           <UserInfoTable user={user} />
           <ContactCard user={user} />
