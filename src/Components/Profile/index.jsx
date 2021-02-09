@@ -21,9 +21,8 @@ export default function UserProfile() {
   const fetchProfiles = useFetchProfiles();
 
   useEffect(() => {
-    // If profiles have not been fetched, fetch profiles
     // Since mock user API does not have a route for grabbing info of a single, specific user
-    // Must fetch profiles, then find the specified user based of the profiles state
+    // Must fetch profiles (if not already fetched), then find the specified user based of the profiles state
     // This also allows for an easy transition when navigating back to the home page
 
     // Note: Fetch only happens when the app has not yet fetched data
@@ -51,10 +50,9 @@ export default function UserProfile() {
           </Link>
         </Flexbox>
       </ProfileHeader>
-      {!user ? (
-        <ProfileNotFound />
-      ) : (
+      {user ? (
         <Flexbox justify="flex-start">
+          {/* Overwrite default profile doc title with personalized title */}
           <DocumentTitle title={`Match | ${user?.name?.first}'s Profile`} />
           <Card>
             <ProfileImage src={user?.picture?.large || images.defaultUser} alt="potential date" />
@@ -62,6 +60,8 @@ export default function UserProfile() {
           <UserInfoTable user={user} />
           <ContactCard user={user} />
         </Flexbox>
+      ) : (
+        <ProfileNotFound />
       )}
     </ProfileContainer>
   );

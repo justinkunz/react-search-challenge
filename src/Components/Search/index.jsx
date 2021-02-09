@@ -16,17 +16,29 @@ export default function SearchPage() {
     ProfileContext
   );
 
-  const fetchProfiles = useFetchProfiles();
-  const handleSortAscending = () => dispatch(ascendingSort());
-  const handleSortDescending = () => dispatch(descendingSort());
-
+  // Local state for managing filter status
+  // When filtered, only shows users < 50
   const [isFiltered, setIsFiltered] = useState(false);
 
+  const fetchProfiles = useFetchProfiles();
   useEffect(() => {
+    // Fetch data if not previously fetched (initial render)
     if (!isFetching && !hasFetchedData) {
       fetchProfiles();
     }
   }, [fetchProfiles, isFetching, hasFetchedData]);
+
+  /**
+   * On Sort Asc. button click
+   * dispatch action to sort cards ascending
+   */
+  const handleSortAscending = () => dispatch(ascendingSort());
+
+  /**
+   * On Sort Desc. button click
+   * dispatch action to sort cards descending
+   */
+  const handleSortDescending = () => dispatch(descendingSort());
 
   /**
    * On Filter Button Click,
@@ -77,6 +89,7 @@ export default function SearchPage() {
 
         <ProfileGrid>
           {profiles
+            // Filter to users < 50 if isFiltered state is true
             .filter((profile) => !isFiltered || profile.dob?.age < 50)
             .map((profile) => (
               <SearchCard

@@ -7,11 +7,12 @@ export default function VerticalTable({ dataSet = [], small = false, includeSemi
     <Table small={small}>
       <tbody>
         {dataSet
-          .filter((data) => !!data)
+          // Filter non objects from array
+          .filter((data) => !!data || typeof data !== 'object')
           .map((data, index) => (
             <tr key={index}>
               <TableHeader>
-                {data.label}
+                {data.label || ''}
                 {includeSemiColon && ':'}
               </TableHeader>
               <td>{data.value}</td>

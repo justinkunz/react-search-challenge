@@ -32,15 +32,15 @@ export default function SearchCard({
           <CardContent>
             <Flexbox align="flex-end" justify="space-between">
               <CardTextContainer>
-                <Flexbox direction="column">
+                <Flexbox column>
                   <UserHandle>
-                    <Flexbox align="center" marginBottom={4}>
+                    <Flexbox mb align="center">
                       {name}
                     </Flexbox>
                   </UserHandle>
 
                   <Flexbox justify="space-between" align="baseline">
-                    <Flexbox align="center" marginBottom={4}>
+                    <Flexbox mb align="center">
                       <AgeLocationText>{location ? `${age} • ${location}` : age}</AgeLocationText>
                     </Flexbox>
                   </Flexbox>

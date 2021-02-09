@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   const history = useHistory();
 
   /**
-   * Redirect to Home Page on Match logo push
+   * Redirect to Home Page on Match logo click
    */
   const redirectToHome = () => history.push('/');
 

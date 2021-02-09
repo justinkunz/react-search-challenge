@@ -9,12 +9,12 @@ export default function UserInfoTable({ user = {} }) {
       label: 'Age',
       value: user.dob.age,
     },
-    {
+    user?.login?.username && {
       label: 'Username',
-      value: user?.login?.username,
+      value: user.login.username,
     },
     user?.location?.city &&
-      user?.location.state && {
+      user.location.state && {
         label: 'Location',
         value: `${user.location.city}, ${user.location.state}`,
       },
